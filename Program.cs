@@ -9,7 +9,7 @@ namespace ConsoleApplication
         {
             try{
                 using (var restClient = new RestClient("https://99a6e754369e9a203f09b7d35bca103e.us-east-1.aws.found.io:9243")){
-                    Task task = restClient.PostAsync((object)@"{
+                    Task task = restClient.PostAsync(@"{
     ""title"": ""One"", ""tags"": [""ruby""]
     }", "my_index/my_type");
                     task.Wait();

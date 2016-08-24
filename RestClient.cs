@@ -16,12 +16,12 @@ namespace ConsoleApplication
             this.httpClient = new HttpClient();
         }
 
-        public async Task PostAsync(object data, string path){
-            var payload = JsonConvert.SerializeObject(data);
+        public async Task PostAsync(string payload, string path){
             Console.WriteLine($"Preparing payload of: {payload}.");
             HttpContent contentPost = new System.Net.Http.StringContent(payload, Encoding.UTF8, "application/json");
             var response = await this.httpClient.PostAsync(this.baseUrl + path, contentPost);
-            //await response.EnsureSuccessStatusCode().Content.ReadAsAsync();
+            var responseString = await response.EnsureSuccessStatusCode().Content.ReadAsStringAsync();
+            Console.WriteLine($"Received: {responseString}.");            
         }
 
         public void Dispose()
