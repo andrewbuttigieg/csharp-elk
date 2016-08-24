@@ -24,6 +24,12 @@ namespace ConsoleApplication
             Console.WriteLine($"Received: {responseString}.");            
         }
 
+        public async Task<string> GetAsync(string path){
+            var response = await this.httpClient.GetAsync(this.baseUrl + path);
+            var responseString = await response.EnsureSuccessStatusCode().Content.ReadAsStringAsync();
+            return responseString;           
+        }
+
         public void Dispose()
         {
             httpClient.Dispose();
