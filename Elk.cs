@@ -6,9 +6,13 @@ namespace ConsoleApplication
     public class Elk{
 
         public string Endpoint { get; private set; }
-        public Elk (string endpoint)
+        private string Username { get;}
+        private string Password { get;}
+        public Elk (string endpoint, string username, string password)
         {
-            this.Endpoint = endpoint; 
+            this.Endpoint = endpoint;
+            this.Username = username; 
+            this.Password = password;
         }
 
         public async Task Send(object payload, string index, string type){
@@ -16,7 +20,7 @@ namespace ConsoleApplication
         }
 
         public async Task Send(string payload, string index, string type){
-            using (var restClient = new RestClient(this.Endpoint))
+            using (var restClient = new RestClient(this.Endpoint, this.Username, this.Password))
             {
                 await restClient.PostAsync(payload, $"{index}/{type}");
             }

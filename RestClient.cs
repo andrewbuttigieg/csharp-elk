@@ -10,17 +10,16 @@ namespace ConsoleApplication
     {
         private string baseUrl { get; set; }
         private HttpClient httpClient { get; }
-        public RestClient (string baseUrl)
+        public RestClient (string baseUrl, string username, string password)
         {
             this.baseUrl = baseUrl + "/";
             this.httpClient = new HttpClient();
+            var byteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
+            this.httpClient.DefaultRequestHeaders.Authorization = 
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
         }
 
         public async Task PostAsync(string payload, string path){
-            var byteArray = Encoding.ASCII.GetBytes("test:Password");
-            this.httpClient.DefaultRequestHeaders.Authorization = 
-            new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
-
             Console.WriteLine($"Preparing payload of: {payload} to {this.baseUrl + path}.");
             HttpContent contentPost = new System.Net.Http.StringContent(payload, Encoding.UTF8, "application/json");
             var response = await this.httpClient.PostAsync(this.baseUrl + path, contentPost);

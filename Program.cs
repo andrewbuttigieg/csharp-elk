@@ -8,7 +8,7 @@ namespace ConsoleApplication
         public static void Main(string[] args)
         {
             try{
-                var elk = new Elk("https://99a6e754369e9a203f09b7d35bca103e.us-east-1.aws.found.io:9243");
+                var elk = new Elk("https://99a6e754369e9a203f09b7d35bca103e.us-east-1.aws.found.io:9243", "test", "Password");
                 Task post = elk.Send(@"{
 ""title"": ""One"", ""tags"": [""ruby""]
 }", "my_index", "my_type");
