@@ -17,7 +17,11 @@ namespace ConsoleApplication
         }
 
         public async Task PostAsync(string payload, string path){
-            Console.WriteLine($"Preparing payload of: {payload}.");
+            var byteArray = Encoding.ASCII.GetBytes("test:Password");
+            this.httpClient.DefaultRequestHeaders.Authorization = 
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
+            Console.WriteLine($"Preparing payload of: {payload} to {this.baseUrl + path}.");
             HttpContent contentPost = new System.Net.Http.StringContent(payload, Encoding.UTF8, "application/json");
             var response = await this.httpClient.PostAsync(this.baseUrl + path, contentPost);
             var responseString = await response.EnsureSuccessStatusCode().Content.ReadAsStringAsync();
